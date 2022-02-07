@@ -13,7 +13,7 @@ export interface MenuDataNode {
 }
 
 export class HyperLink {
-  to:? string;
+  to?: string;
   text?: string;
   target?: string;
   constructor(
