@@ -1,34 +1,25 @@
-import get from "lodash/get";
-
 export interface HyperLinkNode {
-  to?: string;
+  to: string;
   text?: string;
   target?: string;
 }
 
 export interface MenuDataNode {
   menuId: string;
-  parent: HyperLink;
-  links: (HyperLink | MenuData)[];
+  parent?: HyperLink;
+  links?: (HyperLink | MenuData)[];
 }
 
 export class HyperLink {
-  to?: string;
-  text?: string;
+  to: string;
+  text: string;
   target?: string;
   constructor(
     data: any,
-    callback = (data: any) => {
-      const to = get(data, `to`);
-      const text = get(data, `text`);
-      if (!to || !text) {
-        throw new Error("check callback for HyperLink contrstuctor");
-      }
-      return {
-        to,
-        text,
-        target: get(data, `target`)
-      };
+    callback: (data: any) => {
+      to: string;
+      text: string;
+      target?: string;
     }
   ) {
     const node: HyperLinkNode = callback(data);
@@ -40,21 +31,14 @@ export class HyperLink {
 
 export class MenuData {
   menuId: string;
-  parent: HyperLink;
-  links: (HyperLink | MenuData)[];
+  parent?: HyperLink;
+  links?: (HyperLink | MenuData)[];
   constructor(
     data: any,
-    callback = (data: object) => {
-      const menuId = get(data, `menuId`);
-      const parent = get(data, `parent`);
-      if (!menuId || !parent) {
-        throw new Error("Check MenuData callback function");
-      }
-      return {
-        menuId,
-        parent,
-        links: get(data, `links`, [])
-      };
+    callback: (data: any) => {
+      menuId: string;
+      parent?: HyperLink;
+      links?: (HyperLink | MenuData)[];
     }
   ) {
     const node: MenuDataNode = callback(data);
