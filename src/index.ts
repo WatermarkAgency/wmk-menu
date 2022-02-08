@@ -1,11 +1,11 @@
 export interface HyperLinkNode {
-  to: string;
+  to?: string;
   text?: string;
   target?: string;
 }
 
 export interface MenuDataNode {
-  menuId: string;
+  menuId?: string;
   parent?: HyperLink;
   links?: (HyperLink | MenuData)[];
 }
