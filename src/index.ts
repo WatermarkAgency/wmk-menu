@@ -11,14 +11,14 @@ export interface MenuDataNode {
 }
 
 export class HyperLink {
-  to: string;
-  text: string;
+  to?: string;
+  text?: string;
   target?: string;
   constructor(
     data: any,
     callback: (data: any) => {
-      to: string;
-      text: string;
+      to?: string;
+      text?: string;
       target?: string;
     }
   ) {
@@ -30,13 +30,13 @@ export class HyperLink {
 }
 
 export class MenuData {
-  menuId: string;
+  menuId?: string;
   parent?: HyperLink;
   links?: (HyperLink | MenuData)[];
   constructor(
     data: any,
     callback: (data: any) => {
-      menuId: string;
+      menuId?: string;
       parent?: HyperLink;
       links?: (HyperLink | MenuData)[];
     }
