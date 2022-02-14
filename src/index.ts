@@ -22,7 +22,9 @@ export class HyperLink {
       target?: string;
     }
   ) {
-    const node: HyperLinkNode = callback(data);
+    const node: HyperLinkNode = callback(data)
+      ? callback(data)
+      : { to: undefined, text: undefined, target: undefined };
     this.to = node.to;
     this.text = node.text;
     this.target = node.target;
@@ -35,13 +37,18 @@ export class MenuData {
   links?: (HyperLink | MenuData)[];
   constructor(
     data: any,
-    callback: (data: any) => {
-      menuId?: string;
-      parent?: HyperLink;
-      links?: (HyperLink | MenuData)[];
-    }
+    callback: (data: any) =>
+      | {
+          menuId?: string;
+          parent?: HyperLink;
+          links?: (HyperLink | MenuData)[];
+        }
+      | undefined
   ) {
-    const node: MenuDataNode = callback(data);
+    const callbackReturn = callback(data);
+    const node: MenuDataNode = callbackReturn
+      ? callbackReturn
+      : { menuId: undefined, parent: undefined, links: undefined };
     this.menuId = node.menuId;
     this.parent = node.parent;
     this.links = node.links;
