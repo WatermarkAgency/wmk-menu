@@ -37,13 +37,11 @@ export class MenuData {
   links?: (HyperLink | MenuData)[];
   constructor(
     data: any,
-    callback: (data: any) =>
-      | {
-          menuId?: string;
-          parent?: HyperLink;
-          links?: (HyperLink | MenuData)[];
-        }
-      | undefined
+    callback: (data: any) => {
+      menuId?: string;
+      parent?: HyperLink;
+      links?: (HyperLink | MenuData)[];
+    }
   ) {
     const callbackReturn = callback(data);
     const node: MenuDataNode = callbackReturn
