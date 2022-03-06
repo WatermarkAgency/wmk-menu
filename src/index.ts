@@ -1,33 +1,38 @@
-export interface HyperLinkNode {
-  to?: string;
-  text?: string;
-  target?: string;
+export interface MenuQuery {
+  __typename?: string;
+  [key: string]: any;
 }
 
-export interface MenuDataNode {
-  menuId?: string;
-  parent?: HyperLink;
-  links?: (HyperLink | MenuData)[];
+export interface MenuDataCallback {
+  menuId: string;
+  parent?: HyperLink<any>;
+  links: (HyperLink<any> | MenuData<any>)[];
 }
 
-export class HyperLink {
-  to?: string;
-  text?: string;
-  target?: string;
-  constructor(data: any, callback: (data: any) => any) {
-    const node: HyperLinkNode = callback(data);
+export interface HyperlinkCallback {
+  to: string;
+  text: string;
+  target?: "blank" | "self";
+}
+
+export class HyperLink<T extends MenuQuery> {
+  to: string;
+  text: string;
+  target?: "blank" | "self";
+  constructor(data: T, callback: (data: T) => HyperlinkCallback) {
+    const node: HyperlinkCallback = callback({ ...data });
     this.to = node.to;
     this.text = node.text;
     this.target = node.target;
   }
 }
 
-export class MenuData {
-  menuId?: string;
-  parent?: HyperLink;
-  links?: (HyperLink | MenuData)[];
-  constructor(data: any, callback: (data: any) => any) {
-    const node: MenuDataNode = callback(data);
+export class MenuData<T extends MenuQuery> {
+  menuId: string;
+  parent?: HyperLink<T>;
+  links?: (HyperLink<T> | MenuData<T>)[];
+  constructor(data: T, callback: (data: T) => MenuDataCallback) {
+    const node: MenuDataCallback = callback(data);
     this.menuId = node.menuId;
     this.parent = node.parent;
     this.links = node.links;
